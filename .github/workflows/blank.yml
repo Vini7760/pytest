@@ -28,7 +28,7 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        pytest --cov=main_module tests/
+        pytest -W ignore::pytest.PytestDeprecationWarning --cov=main_module tests/
 
     - name: Upload coverage report
       uses: actions/upload-artifact@v2

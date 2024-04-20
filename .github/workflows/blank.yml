@@ -1,4 +1,4 @@
-name: pytest with Coverage
+name: pytest
 
 on:
   push:
@@ -26,13 +26,5 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run tests with coverage
-      run: |
-        pip install pytest-cov
-        pytest --cov=main_module tests/
-
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage
-        path: .coverage
+    - name: Run tests
+      run: pytest

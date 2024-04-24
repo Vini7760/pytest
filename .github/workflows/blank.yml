@@ -1,41 +1,21 @@
-name: CI
+name: Python test
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [ master ]
 
 jobs:
-  test:
+  run-tests:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
-
-    - name: Install dependencies
-      run: |
-        pip install pytest coverage
-
-    - name: Set PYTHONPATH
-      run: |
-        export PYTHONPATH="${PYTHONPATH}:/path/to/your/project"
-
-    - name: Run tests and collect coverage
-      run: |
-        coverage run -m pytest test_main.py
-        coverage report -m
-
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage-report
-        path: htmlcov  # Path to your coverage report directory
+      - uses: actions/checkout@v3
+      - name: Install Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10' # You can specify the exact version you need here
+      - name: Install dependencies
+        run: |
+          python -m pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          pytest test_folder/test_main.py test_folder/check_add.py  # You can add more test files here

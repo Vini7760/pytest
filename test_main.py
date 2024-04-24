@@ -1,6 +1,6 @@
 from Main import add
 from Main_2 import sub
-from test_folder/check_add import mul
+from test_folder.check_add import mul
 
 
 def test_add_positive():

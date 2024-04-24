@@ -1,5 +1,6 @@
 from Main import add
 from Main_2 import sub
+from test_folder.check_add import mul
 
 def test_add_positive():
   """Tests that adding two positive numbers works correctly."""
@@ -18,3 +19,7 @@ def test_add_zero():
 def test_sub():
   """Tests that adding two positive numbers works correctly."""
   assert sub(3, 1) == 2
+
+def test_mul():
+  """Tests that adding two positive numbers works correctly."""
+  assert mul(3, 1) == 3

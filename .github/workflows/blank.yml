@@ -1,6 +1,14 @@
+# .github/workflows/pytest.yml
+
 name: Pytest with Coverage
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -16,10 +24,12 @@ jobs:
         python-version: '3.x'
 
     - name: Install dependencies
-      run: pip install pytest pytest-cov
+      run: |
+        pip install pytest pytest-cov
+        pip install -e main_code  # Install your main code as editable (assuming it's a package)
 
-    - name: Run tests with coverage
-      run: pytest --cov=test_folder
+    - name: Run pytest with coverage
+      run: pytest --cov=main_code test_folder/
 
     - name: Generate coverage report
       run: |

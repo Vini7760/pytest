@@ -1,4 +1,6 @@
 from Main import add
+from Main_2 import sub
+
 def test_add_positive():
   """Tests that adding two positive numbers works correctly."""
   assert add(2, 3) == 5
@@ -12,3 +14,7 @@ def test_add_zero():
   assert add(0, 10) == 10
   assert add(10, 0) == 10
   assert add(10, 0) == 10
+
+def test_sub():
+  """Tests that adding two positive numbers works correctly."""
+  assert sub(3, 1) == 2

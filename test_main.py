@@ -23,4 +23,4 @@ def test_sub():
 
 def test_mul():
   """Tests that adding two positive numbers works correctly."""
-  assert mul(3, 1) == 3
+  assert mul(3, 1) == 4

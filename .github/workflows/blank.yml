@@ -19,7 +19,7 @@ jobs:
       run: pip install pytest pytest-cov
 
     - name: Run tests with coverage
-      run: pytest --cov=test_folder test_folder/
+      run: pytest --cov=test_folder
 
     - name: Generate coverage report
       run: |

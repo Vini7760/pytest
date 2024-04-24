@@ -1,10 +1,9 @@
 name: CI
 
-
 on:
   push:
     branches:
-      - main  # Or whatever your main branch is called
+      - main
   pull_request:
     branches:
       - main
@@ -25,6 +24,10 @@ jobs:
     - name: Install dependencies
       run: |
         pip install pytest coverage
+
+    - name: Set PYTHONPATH
+      run: |
+        export PYTHONPATH="${PYTHONPATH}:/path/to/your/project"
 
     - name: Run tests and collect coverage
       run: |

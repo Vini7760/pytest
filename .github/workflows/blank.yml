@@ -25,7 +25,10 @@ jobs:
           coverage run -m pytest --cov=. --cov-report=xml:pytest-coverage.xml
           # Convert coverage XML report to text format
           coverage xml -o pytest-coverage.txt
-
+      - name: Generate pytest.xml
+        run: |
+          # Run pytest and save the report to pytest.xml
+          pytest --junitxml=pytest.xml
       - name: Test with pytest
         run: |
           coverage run -m pytest -v -s

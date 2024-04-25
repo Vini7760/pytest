@@ -14,4 +14,4 @@ def test_multiplication():
     assert mul(3, 1) == 3
 
 def test_add_2():
-    assert add_2(3, 1) == 3
+    assert add_2(3, 1) == 4

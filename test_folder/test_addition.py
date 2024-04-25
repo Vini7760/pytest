@@ -1,6 +1,6 @@
 from Energy.Gru.Inc.a4a_pipe_lib import add
-from Energy.Gru.Inc.a4a_pipe_lib import sub
-from Energy.Gru.Inc.a4a_pipe_lib import mul
+from Energy.Gru.Inc.delta_writer import sub
+from Energy.Gru.Inc.scd_fix import mul
 from Energy.Gru.a4a_02_ebo_transform_timeseries import add_2
 
 def test_addition():

@@ -73,10 +73,20 @@ jobs:
       - name: Generate Coverage Report for text  
         run: |  
           coverage report -m > pytest-coverage.txt
+      - name: Generate Coverage Report for xml  
+        run: |  
+          coverage report -m > pytest-coverage.xml
       - name: Save coverage reports as artifacts
         uses: actions/upload-artifact@v2
         with:
           name: pytest-coverage
           path: |
             pytest-coverage.txt
-
+            pytest-coverage.xml
+      - name: Comment coverage reports on PR
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            Here are the coverage reports:
+            - [Text Coverage Report](pytest-coverage.txt)
+            - [XML Coverage Report](pytest-coverage.xml)

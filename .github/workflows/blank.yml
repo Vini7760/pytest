@@ -67,13 +67,11 @@ jobs:
           pip install pytest pytest-cov
 
       - name: Run tests with coverage
-        uses: VatsalJagani/pytest-cov-action@v2
-        with:
-          args: --cov=./
+        run: |
+          pytest --cov=./
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
           path: coverage.xml
-

@@ -112,7 +112,8 @@ jobs:
                 \`\`\`
               `;
               
-              await github.issues.createComment({
+              // Create a comment on the pull request
+              await github.rest.issues.createComment({
                 issue_number: prNumber,
                 owner: context.repo.owner,
                 repo: context.repo.repo,

@@ -1,48 +1,81 @@
-name: pytest-coverage-comment
+# name: pytest-coverage-comment
+# on:
+#   pull_request:
+#     branches:
+#       - '*' 
+  
+# jobs:  
+#   build:  
+#     runs-on: ubuntu-latest  
+#     strategy:  
+#       matrix:  
+#         python-version: ["3.10"]  
+  
+#     steps:  
+#       - uses: actions/checkout@v3  
+#       - name: Set up Python ${{ matrix.python-version }}  
+#         uses: actions/setup-python@v4  
+#         with:  
+#           python-version: ${{ matrix.python-version }}  
+#       - name: Install dependencies  
+#         run: |  
+#           python -m pip install --upgrade pip  
+#           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi    
+#       - name: Test with pytest  
+#         run: |  
+#           coverage run -m pytest  -v -s  
+#       - name: Generate Coverage Report  
+#         run: |  
+#           coverage report -m
+#       - name: Generate Coverage Report  
+#         run: |  
+#             coverage report -m >pytest-coverage.txt
+
+#       - name: Pytest coverage comment
+#         uses: MishaKav/pytest-coverage-comment@main
+#         with:
+#           pytest-coverage-path: ./pytest-coverage.txt
+#           junitxml-path: ./pytest.xml
+
+
+
+name: My Pytest Coverage Comment
 on:
   pull_request:
-    branches:
-      - '*' 
-  
-jobs:  
-  build:  
-    runs-on: ubuntu-latest  
-    strategy:  
-      matrix:  
-        python-version: ["3.10"]  
-  
-    steps:  
-      - uses: actions/checkout@v3  
-      - name: Set up Python ${{ matrix.python-version }}  
-        uses: actions/setup-python@v4  
-        with:  
-          python-version: ${{ matrix.python-version }}  
-      - name: Install dependencies  
-        run: |  
-          python -m pip install --upgrade pip  
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi    
-      - name: Test with pytest  
-        run: |  
-          coverage run -m pytest  -v -s  
-      - name: Generate Coverage Report  
-        run: |  
-          coverage report -m
-      - name: Generate Coverage Report  
-        run: |  
-            coverage report -m >pytest-coverage.txt
+
+permissions:
+  contents: write
+  checks: write
+  pull-requests: write
+
+jobs:
+  live-test:
+    name: Live Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
       - name: Pytest coverage comment
+        id: coverageComment
         uses: MishaKav/pytest-coverage-comment@main
         with:
-          pytest-coverage-path: ./pytest-coverage.txt
-          junitxml-path: ./pytest.xml
+          pytest-coverage-path: ./data/pytest-coverage_4.txt
+          junitxml-path: ./data/pytest_1.xml
 
-      - name: Build coverage file
+      - name: Check the output coverage
         run: |
-          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
+          echo "Coverage Percantage - ${{ steps.coverageComment.outputs.coverage }}"
+          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
+          echo "Coverage Html - ${{ steps.coverageComment.outputs.coverageHtml }}"
 
-      - name: Pytest coverage comment
-        uses: MishaKav/pytest-coverage-comment@main
-        with:
-          pytest-coverage-path: ./pytest-coverage.txt
-          junitxml-path: ./pytest.xml
+          echo "Coverage Warnings - ${{ steps.coverageComment.outputs.warnings }}"
+
+          echo "Coverage Errors - ${{ steps.coverageComment.outputs.errors }}"
+          echo "Coverage Failures - ${{ steps.coverageComment.outputs.failures }}"
+          echo "Coverage Skipped - ${{ steps.coverageComment.outputs.skipped }}"
+          echo "Coverage Tests - ${{ steps.coverageComment.outputs.tests }}"
+          echo "Coverage Time - ${{ steps.coverageComment.outputs.time }}"
+
+          echo "Not Success Test Info - ${{ steps.coverageComment.outputs.notSuccessTestInfo }}"
+
+s

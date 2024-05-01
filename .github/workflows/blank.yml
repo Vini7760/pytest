@@ -25,7 +25,13 @@ jobs:
       - name: Generate Coverage Report  
         run: |  
           coverage report -m
+      - name: Generate Coverage Report  
+        run: |  
+            coverage report -m >pytest-coverage.txt
 
-      - name: Pytest Coverage Comment
-        uses: MishaKav/pytest-coverage-comment@v1.1.5
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
       

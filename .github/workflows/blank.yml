@@ -29,11 +29,17 @@ jobs:
           coverage report -m
       - name: Generate Coverage Report  
         run: |  
-            coverage report -m >pytest-coverage.txt
+            coverage report -m >test-results.xml
 
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
           pytest-coverage-path: ./pytest-coverage.txt
           junitxml-path: ./pytest.xml
+
+      - uses: VatsalJagani/pytest-cov-action@v0.4
+        with:
+          pytest_results_file: "junit/test-results.xml"
+          pytest_cov_file: "junit/coverage.xml"
+        if: ${{ always() }}
 

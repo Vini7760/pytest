@@ -91,27 +91,33 @@ jobs:
             const fs = require('fs');
             const textReport = fs.readFileSync('pytest-coverage.txt', 'utf8');
             const xmlReport = fs.readFileSync('pytest-coverage.xml', 'utf8');
-            const prNumber = context.payload.pull_request.number;
             
-            const message = `
-              Here are the coverage reports:
-              - [Text Coverage Report](pytest-coverage.txt)
-              - [XML Coverage Report](pytest-coverage.xml)
+            // Check if the payload contains pull_request data
+            if (context.payload && context.payload.pull_request) {
+              const prNumber = context.payload.pull_request.number;
               
-              Text Coverage Report:
-              \`\`\`
-              ${textReport}
-              \`\`\`
+              const message = `
+                Here are the coverage reports:
+                - [Text Coverage Report](pytest-coverage.txt)
+                - [XML Coverage Report](pytest-coverage.xml)
+                
+                Text Coverage Report:
+                \`\`\`
+                ${textReport}
+                \`\`\`
+                
+                XML Coverage Report:
+                \`\`\`
+                ${xmlReport}
+                \`\`\`
+              `;
               
-              XML Coverage Report:
-              \`\`\`
-              ${xmlReport}
-              \`\`\`
-            `;
-            
-            await github.issues.createComment({
-              issue_number: prNumber,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: message
-            });
+              await github.issues.createComment({
+                issue_number: prNumber,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: message
+              });
+            } else {
+              console.log('No pull request data found.');
+            }

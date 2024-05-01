@@ -1,3 +1,46 @@
+# name: pytest-coverage-comment
+# on:
+#   push:
+#     branches:
+#       - '*' 
+#   pull_request:
+#     branches:
+#       - '*'
+    
+  
+# jobs:  
+#   build:  
+#     runs-on: ubuntu-latest  
+#     strategy:  
+#       matrix:  
+#         python-version: ["3.10"]  
+  
+#     steps:  
+#       - uses: actions/checkout@v3  
+#       - name: Set up Python ${{ matrix.python-version }}  
+#         uses: actions/setup-python@v4  
+#         with:  
+#           python-version: ${{ matrix.python-version }}  
+#       - name: Install dependencies  
+#         run: |  
+#           python -m pip install --upgrade pip  
+#           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi    
+#       - name: Test with pytest  
+#         run: |  
+#           coverage run -m pytest  -v -s  
+#       - name: Generate Coverage Report  
+#         run: |  
+#           coverage report -m
+#       - name: Generate Coverage Report for text  
+#         run: |  
+#           coverage report -m >pytest-coverage-tx.txt
+
+#       - name: Generate Coverage Report for xml  
+#         run: |  
+#           coverage report -m >pytest-coverage-xm.xml
+
+
+
 name: pytest-coverage-comment
 on:
   push:
@@ -7,7 +50,6 @@ on:
     branches:
       - '*'
     
-  
 jobs:  
   build:  
     runs-on: ubuntu-latest  
@@ -28,14 +70,16 @@ jobs:
       - name: Test with pytest  
         run: |  
           coverage run -m pytest  -v -s  
-      - name: Generate Coverage Report  
-        run: |  
-          coverage report -m
       - name: Generate Coverage Report for text  
         run: |  
-          coverage report -m >pytest-coverage-tx.txt
-
+          coverage report -m > pytest-coverage.txt
       - name: Generate Coverage Report for xml  
         run: |  
-          coverage report -m >pytest-coverage-xm.xml
-
+          coverage report -m > pytest-coverage.xml
+      - name: Save coverage reports as artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: pytest-coverage
+          path: |
+            pytest-coverage.txt
+            pytest-coverage.xml

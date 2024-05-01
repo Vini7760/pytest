@@ -84,11 +84,34 @@ jobs:
             pytest-coverage.txt
             pytest-coverage.xml
       - name: Comment coverage reports on PR
-        uses: mshick/add-pr-comment@v1
+        uses: actions/github-script@v5
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          message: |
-            Here are the coverage reports:
-            - [Text Coverage Report](pytest-coverage.txt)
-            - [XML Coverage Report](pytest-coverage.xml)
-          
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const textReport = fs.readFileSync('pytest-coverage.txt', 'utf8');
+            const xmlReport = fs.readFileSync('pytest-coverage.xml', 'utf8');
+            const prNumber = context.payload.pull_request.number;
+            
+            const message = `
+              Here are the coverage reports:
+              - [Text Coverage Report](pytest-coverage.txt)
+              - [XML Coverage Report](pytest-coverage.xml)
+              
+              Text Coverage Report:
+              \`\`\`
+              ${textReport}
+              \`\`\`
+              
+              XML Coverage Report:
+              \`\`\`
+              ${xmlReport}
+              \`\`\`
+            `;
+            
+            await github.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });

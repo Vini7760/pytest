@@ -1,6 +1,6 @@
 name: pytest-coverage-comment
 on:
-  push:
+  pull_request:
     branches:
       - '*' 
   
@@ -27,14 +27,13 @@ jobs:
       - name: Generate Coverage Report  
         run: |  
           coverage report -m
-      - name: Generate Coverage Report  
+      - name: Generate Coverage Report for text  
         run: |  
-            coverage report -m >pytest-coverage_1.txt
-      
-      - name: Generate Coverage Report  
-        run: |  
-          coverage report -m >pytest-coverage_2.xml
+          coverage report -m >pytest-coverage-tx.txt
 
+      - name: Generate Coverage Report for xml  
+        run: |  
+          coverage report -m >pytest-coverage-xm.xml
 
 
           

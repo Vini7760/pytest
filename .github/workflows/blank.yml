@@ -29,7 +29,11 @@ jobs:
           coverage report -m
       - name: Generate Coverage Report  
         run: |  
-            coverage report -m >pytest-coverage.txt
+            coverage report -m >pytest-coverage_1.txt
+      
+      - name: Generate Coverage Report  
+        run: |  
+          coverage report -m >pytest-coverage_2.xml
 
 
 

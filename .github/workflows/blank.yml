@@ -78,4 +78,3 @@ jobs:
 
           echo "Not Success Test Info - ${{ steps.coverageComment.outputs.notSuccessTestInfo }}"
 
-s

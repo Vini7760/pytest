@@ -124,6 +124,7 @@ jobs:
 
       - name: Build Docker image
         run: docker build . -t ghcr.io/vini7760/pytest:latest
+        
 
       - name: Push Docker image to GitHub Container Registry
         run: docker push ghcr.io/vini7760/pytest:latest
